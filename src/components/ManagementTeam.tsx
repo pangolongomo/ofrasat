@@ -1,10 +1,11 @@
+import Image from "next/image";
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { Users, Globe } from "lucide-react";
+import { Globe } from "lucide-react";
 
 interface TeamMember {
   name: string;
@@ -55,10 +56,11 @@ export default function ManagementTeam() {
             >
               <div className="aspect-square w-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center relative">
                 {member.image ? (
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
-                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    fill
+                    className="object-cover object-top"
                   />
                 ) : (
                   member.icon
@@ -77,10 +79,10 @@ export default function ManagementTeam() {
         <div className="max-w-6xl mx-auto">
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
             <p className="text-gray-700 leading-relaxed mb-6">
-              OFRASAT regroupe l'ensemble des fonctions stratégiques, opérationnelles et de support, organisées de manière hiérarchique et fonctionnelle pour assurer une gestion efficace, une croissance durable et une création de valeur. Chaque département contribue à la réalisation des objectifs globaux définis par la direction générale.
+              OFRASAT regroupe l&apos;ensemble des fonctions stratégiques, opérationnelles et de support, organisées de manière hiérarchique et fonctionnelle pour assurer une gestion efficace, une croissance durable et une création de valeur. Chaque département contribue à la réalisation des objectifs globaux définis par la direction générale.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              L'ensemble des équipes de l'entreprise œuvre de manière coordonnée pour atteindre notre mission : offrir des produits et services de qualité, répondre aux attentes de nos clients, et contribuer positivement à la société. L'organigramme reflète notre engagement en faveur de la transparence, de l'efficacité et de l'innovation.
+              L&apos;ensemble des équipes de l&apos;entreprise œuvre de manière coordonnée pour atteindre notre mission : offrir des produits et services de qualité, répondre aux attentes de nos clients, et contribuer positivement à la société. L&apos;organigramme reflète notre engagement en faveur de la transparence, de l&apos;efficacité et de l&apos;innovation.
             </p>
           </div>
         </div>

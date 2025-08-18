@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -120,9 +121,11 @@ export default function Navbar() {
               href="/"
               className="flex items-center hover:opacity-90 transition-opacity"
             >
-              <img
+              <Image
                 src="/logo-ofrasat.png"
                 alt="OFRASAT"
+                width={120}
+                height={40}
                 className="h-8 md:h-10 w-auto"
               />
             </Link>

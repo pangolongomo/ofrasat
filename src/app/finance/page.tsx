@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 import {
   PiggyBank,
   CreditCard,
@@ -90,13 +90,15 @@ export default function FinancePage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <img
+          <Image
             src="/sections/ofrafinance PNG.png"
             alt="OFRASAT Finance"
+            width={300}
+            height={192}
             className="mx-auto mb-6 max-h-48 object-contain"
           />
           <p className="text-xl max-w-3xl mx-auto">
-            Institution financière engagée dans l'accompagnement des
+            Institution financière engagée dans l&apos;accompagnement des
             particuliers, entrepreneurs et institutions
           </p>
         </div>
@@ -108,11 +110,12 @@ export default function FinancePage() {
           <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg mx-auto text-gray-700 space-y-6">
               <p>
-                OFRASAT dispose d'une <strong>institution financière</strong>{" "}
-                engagée dans l'accompagnement des particuliers, des
-                entrepreneurs et des institutions dans la{" "}
+                OFRASAT dispose d&apos;une{" "}
+                <strong>institution financière</strong> engagée dans
+                l&apos;accompagnement des particuliers, des entrepreneurs et des
+                institutions dans la{" "}
                 <strong>gestion optimale de leurs finances</strong>. Il comprend
-                une coopérative d'épargne et de crédit dénommée{" "}
+                une coopérative d&apos;épargne et de crédit dénommée{" "}
                 <strong>Ofrasat Avenir Finance (OFRAFIN)</strong>.
               </p>
               <p>
@@ -121,7 +124,7 @@ export default function FinancePage() {
                 <strong>sûrs</strong> et
                 <strong>adaptés à tous</strong>, en particulier aux personnes
                 exclues du système bancaire traditionnel, afin de stimuler{" "}
-                <strong>l'inclusion financière</strong>, renforcer la{" "}
+                <strong>l&apos;inclusion financière</strong>, renforcer la{" "}
                 <strong>résilience économique</strong> et favoriser le{" "}
                 <strong>développement durable</strong>.
               </p>
@@ -141,7 +144,7 @@ export default function FinancePage() {
               <PiggyBank className="w-12 h-12 text-green-600 mb-4" />
               <h3 className="text-xl font-bold mb-4">Épargne</h3>
               <ul className="text-gray-600 space-y-2">
-                <li>• Comptes d'épargne individuels et solidaires</li>
+                <li>• Comptes d&apos;épargne individuels et solidaires</li>
                 <li>• Épargne avec objectifs (études, projets, urgences)</li>
                 <li>• Épargne à la carte digitalisée</li>
               </ul>
@@ -166,7 +169,7 @@ export default function FinancePage() {
               <GraduationCap className="w-12 h-12 text-green-600 mb-4" />
               <h3 className="text-xl font-bold mb-4">Éducation financière</h3>
               <ul className="text-gray-600 space-y-2">
-                <li>• Ateliers d'éducation financière</li>
+                <li>• Ateliers d&apos;éducation financière</li>
                 <li>• Formations pour femmes, jeunes et entrepreneurs</li>
                 <li>• Sessions communautaires en langues locales</li>
               </ul>
@@ -195,8 +198,8 @@ export default function FinancePage() {
                   <div>
                     <h4 className="font-bold">Proximité</h4>
                     <p className="text-gray-600">
-                      Nous sommes à l'écoute de nos clients et proches de leurs
-                      réalités.
+                      Nous sommes à l&apos;écoute de nos clients et proches de
+                      leurs réalités.
                     </p>
                   </div>
                 </div>
@@ -215,8 +218,8 @@ export default function FinancePage() {
                   <div>
                     <h4 className="font-bold">Éducation</h4>
                     <p className="text-gray-600">
-                      Nous mettons l'accent sur la formation comme levier
-                      d'autonomisation.
+                      Nous mettons l&apos;accent sur la formation comme levier
+                      d&apos;autonomisation.
                     </p>
                   </div>
                 </div>
@@ -225,8 +228,8 @@ export default function FinancePage() {
                   <div>
                     <h4 className="font-bold">Innovation</h4>
                     <p className="text-gray-600">
-                      Nous intégrons des outils digitaux pour faciliter l'accès
-                      aux services.
+                      Nous intégrons des outils digitaux pour faciliter
+                      l&apos;accès aux services.
                     </p>
                   </div>
                 </div>
@@ -261,7 +264,7 @@ export default function FinancePage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md text-center lg:col-span-2 cursor-pointer hover:shadow-lg hover:bg-green-50 transition-all">
               <h3 className="text-lg font-bold text-green-600">
-                Groupes d'entraide ou associations communautaires
+                Groupes d&apos;entraide ou associations communautaires
               </h3>
             </div>
           </div>
@@ -276,20 +279,24 @@ export default function FinancePage() {
             {/* Gallery Grid */}
             <div className="space-y-4">
               <div className="w-full">
-                <img
+                <Image
                   src={galleryImages[0].src}
                   alt={galleryImages[0].alt}
                   onClick={() => openImage(0)}
+                  width={800}
+                  height={400}
                   className="w-full h-64 md:h-96 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {galleryImages.slice(1).map((image, index) => (
-                  <img
+                  <Image
                     key={index + 1}
                     src={image.src}
                     alt={image.alt}
                     onClick={() => openImage(index + 1)}
+                    width={400}
+                    height={300}
                     className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
                   />
                 ))}

@@ -26,30 +26,27 @@ interface ArticlesSectionProps {
   linkColor?: string;
 }
 
-export default function ArticlesSection({
-  branchType,
-  linkColor = "text-blue-600 hover:text-blue-800",
-}: ArticlesSectionProps) {
+export default function ArticlesSection({ branchType }: ArticlesSectionProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const fetchArticles = async () => {
-    try {
-      const response = await fetch(`/api/articles/public?branch=${branchType}`);
-      if (response.ok) {
-        const data = await response.json();
-        setArticles(data.slice(0, 3));
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch(`/api/articles/public?branch=${branchType}`);
+        if (response.ok) {
+          const data = await response.json();
+          setArticles(data.slice(0, 3));
+        }
+      } catch {
+        console.error("Erreur lors du chargement des articles");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Erreur lors du chargement des articles");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchArticles();
+  }, [branchType]);
 
   if (loading) {
     return (

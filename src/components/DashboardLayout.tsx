@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -147,9 +148,11 @@ export default function DashboardLayout({
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink href="/">
-                        <img
+                        <Image
                           src="/logo-ofrasat-blue.png"
                           alt="OFRASAT"
+                          width={24}
+                          height={24}
                           className="h-6 w-auto"
                         />
                       </BreadcrumbLink>

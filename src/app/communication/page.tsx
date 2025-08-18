@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   Megaphone,
   Camera,
@@ -7,6 +6,7 @@ import {
   Users,
   Target,
 } from "lucide-react";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import ArticlesSection from "@/components/ArticlesSection";
 import Footer from "@/components/Footer";
@@ -44,9 +44,11 @@ export default function CommunicationPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <img
+          <Image
             src="/sections/OFRA AGENCY PNG.png"
             alt="OFRASAT Communication"
+            width={300}
+            height={192}
             className="mx-auto mb-6 max-h-48 object-contain"
           />
           <p className="text-xl max-w-3xl mx-auto">
@@ -82,7 +84,7 @@ export default function CommunicationPage() {
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
-            Nos domaines d'expertise
+            Nos domaines d&apos;expertise
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -106,7 +108,7 @@ export default function CommunicationPage() {
                 <li>• Conception de campagnes institutionnelles</li>
                 <li>• Production de contenus multimédias</li>
                 <li>• Déploiement multicanal</li>
-                <li>• Évaluation et reporting d'impact</li>
+                <li>• Évaluation et reporting d&apos;impact</li>
               </ul>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -151,7 +153,7 @@ export default function CommunicationPage() {
                 Événementiel & activation
               </h3>
               <ul className="text-gray-600 space-y-2">
-                <li>• Conception et organisation d'événements</li>
+                <li>• Conception et organisation d&apos;événements</li>
                 <li>• Lancement de produits ou campagnes</li>
                 <li>• Coordination logistique et technique</li>
                 <li>• Scénographie et animation</li>
@@ -173,7 +175,8 @@ export default function CommunicationPage() {
             </p>
             <p className="text-lg text-gray-700">
               Nous combinons analyse stratégique, créativité graphique,
-              technologie et terrain pour garantir l'efficacité de vos actions.
+              technologie et terrain pour garantir l&apos;efficacité de vos
+              actions.
             </p>
           </div>
         </div>

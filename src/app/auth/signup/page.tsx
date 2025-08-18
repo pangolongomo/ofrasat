@@ -1,37 +1,40 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useState } from 'react'
-import { ArrowLeft, Mail, Lock, User } from 'lucide-react'
+import Link from "next/link";
+import { useState } from "react";
+import { ArrowLeft, Mail, Lock, User } from "lucide-react";
 
 export default function SignUpPage() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // TODO: Implement user registration with validation
     if (password !== confirmPassword) {
-      alert('Les mots de passe ne correspondent pas')
-      return
+      alert("Les mots de passe ne correspondent pas");
+      return;
     }
-    console.log('Sign up:', { name, email, password })
-  }
+    console.log("Sign up:", { name, email, password });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link href="/" className="flex items-center justify-center text-blue-600 hover:text-blue-800 mb-6">
+        <Link
+          href="/"
+          className="flex items-center justify-center text-blue-600 hover:text-blue-800 mb-6"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Link>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Créer un compte
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Rejoignez l'équipe OFRASAT
+          Rejoignez l&apos;équipe OFRASAT
         </p>
       </div>
 
@@ -39,7 +42,10 @@ export default function SignUpPage() {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nom complet
               </label>
               <div className="mt-1 relative">
@@ -61,7 +67,10 @@ export default function SignUpPage() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Adresse email
               </label>
               <div className="mt-1 relative">
@@ -83,7 +92,10 @@ export default function SignUpPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Mot de passe
               </label>
               <div className="mt-1 relative">
@@ -105,7 +117,10 @@ export default function SignUpPage() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirmer le mot de passe
               </label>
               <div className="mt-1 relative">
@@ -142,7 +157,9 @@ export default function SignUpPage() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Déjà un compte ?</span>
+                <span className="px-2 bg-white text-gray-500">
+                  Déjà un compte ?
+                </span>
               </div>
             </div>
 
@@ -158,5 +175,5 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

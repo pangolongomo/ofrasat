@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, BranchType } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -22,19 +22,19 @@ async function main() {
   const branches = [
     { 
       name: 'OFRASAT Consulting', 
-      type: 'CONSULTING', 
+      type: 'CONSULTING' as BranchType, 
       slug: 'consulting',
       description: 'Cabinet de consultance spécialisé dans l\'ingénierie numérique et le conseil stratégique'
     },
     { 
       name: 'OFRASAT Finance', 
-      type: 'FINANCE', 
+      type: 'FINANCE' as BranchType, 
       slug: 'finance',
       description: 'Institution financière engagée dans l\'accompagnement des particuliers et entrepreneurs'
     },
     { 
       name: 'OFRASAT Communication', 
-      type: 'COMMUNICATION', 
+      type: 'COMMUNICATION' as BranchType, 
       slug: 'communication',
       description: 'Cabinet de communication global spécialisé dans le conseil stratégique et la production audiovisuelle'
     }
@@ -49,20 +49,20 @@ async function main() {
   }
 
   // Create company info
-  await prisma.companyInfo.upsert({
-    where: { id: 'company-info' },
-    update: {},
-    create: {
-      id: 'company-info',
-      mission: 'Accompagner nos clients dans la réalisation de leurs projets complexes en offrant des solutions innovantes et durables.',
-      vision: 'Devenir une compagnie leader en matière d\'ingénierie et d\'appui-conseil dans la mise en œuvre des missions complexes gouvernementales et privées.',
-      values: 'Sérieux, Innovation, Fidélité, Excellence, Intégrité',
-      address: 'Kinshasa, République Démocratique du Congo',
-      phone: '+243 840 736 765',
-      email: 'contact@ofrasat.com',
-      website: 'www.ofrasat.com'
-    }
-  })
+  const companyInfo = await prisma.companyInfo.findFirst()
+  if (!companyInfo) {
+    await prisma.companyInfo.create({
+      data: {
+        mission: 'Accompagner nos clients dans la réalisation de leurs projets complexes en offrant des solutions innovantes et durables.',
+        vision: 'Devenir une compagnie leader en matière d\'ingénierie et d\'appui-conseil dans la mise en œuvre des missions complexes gouvernementales et privées.',
+        values: 'Sérieux, Innovation, Fidélité, Excellence, Intégrité',
+        address: 'Kinshasa, République Démocratique du Congo',
+        phone: '+243 840 736 765',
+        email: 'contact@ofrasat.com',
+        website: 'www.ofrasat.com'
+      }
+    })
+  }
 
   console.log('Seeding completed')
 }

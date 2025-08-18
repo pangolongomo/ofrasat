@@ -228,9 +228,9 @@ export default function UsersPage() {
       >
         <DialogContent className="backdrop-blur-sm">
           <DialogHeader>
-            <DialogTitle>Modifier l'utilisateur</DialogTitle>
+            <DialogTitle>Modifier l&apos;utilisateur</DialogTitle>
             <DialogDescription>
-              Modifier les informations de l'utilisateur
+              Modifier les informations de l&apos;utilisateur
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={updateUser} className="space-y-4">
@@ -304,9 +304,9 @@ export default function UsersPage() {
       >
         <DialogContent className="backdrop-blur-sm">
           <DialogHeader>
-            <DialogTitle>Détails de l'utilisateur</DialogTitle>
+            <DialogTitle>Détails de l&apos;utilisateur</DialogTitle>
             <DialogDescription>
-              Informations complètes de l'utilisateur
+              Informations complètes de l&apos;utilisateur
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">

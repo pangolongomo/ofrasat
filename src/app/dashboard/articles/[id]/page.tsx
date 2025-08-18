@@ -1,70 +1,79 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useRouter, useParams } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Edit, ArrowLeft, Calendar, User, Building } from 'lucide-react'
-import { toast } from 'sonner'
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Edit, ArrowLeft, Calendar, User, Building } from "lucide-react";
+import { toast } from "sonner";
 
 interface Article {
-  id: string
-  title: string
-  slug: string
-  excerpt?: string
-  content: string
-  featuredImage?: string
-  status: string
-  publishedAt?: string
-  createdAt: string
-  branch: { name: string }
-  author: { name: string }
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content: string;
+  featuredImage?: string;
+  status: string;
+  publishedAt?: string;
+  createdAt: string;
+  branch: { name: string };
+  author: { name: string };
 }
 
 export default function ViewArticlePage() {
-  const router = useRouter()
-  const params = useParams()
-  const [article, setArticle] = useState<Article | null>(null)
-  const [loading, setLoading] = useState(true)
+  const router = useRouter();
+  const params = useParams();
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchArticle()
-  }, [])
-
-  const fetchArticle = async () => {
-    try {
-      const response = await fetch(`/api/articles/${params.id}`)
-      if (response.ok) {
-        const data = await response.json()
-        setArticle(data)
-      } else {
-        toast.error('Article non trouvé')
-        router.push('/dashboard/articles')
+    const fetchArticle = async () => {
+      try {
+        const response = await fetch(`/api/articles/${params.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setArticle(data);
+        } else {
+          toast.error("Article non trouvé");
+          router.push("/dashboard/articles");
+        }
+      } catch {
+        toast.error("Erreur lors du chargement de l'article");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast.error('Erreur lors du chargement de l\'article')
-    } finally {
-      setLoading(false)
+    };
+
+    if (params.id) {
+      fetchArticle();
     }
-  }
+  }, [params.id, router]);
 
   if (loading) {
-    return <div className="flex justify-center items-center h-64">Chargement...</div>
+    return (
+      <div className="flex justify-center items-center h-64">Chargement...</div>
+    );
   }
 
   if (!article) {
-    return <div className="text-center">Article non trouvé</div>
+    return <div className="text-center">Article non trouvé</div>;
   }
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'PUBLISHED': return 'bg-green-100 text-green-800'
-      case 'DRAFT': return 'bg-yellow-100 text-yellow-800'
-      case 'ARCHIVED': return 'bg-gray-100 text-gray-800'
-      default: return 'bg-gray-100 text-gray-800'
+      case "PUBLISHED":
+        return "bg-green-100 text-green-800";
+      case "DRAFT":
+        return "bg-yellow-100 text-yellow-800";
+      case "ARCHIVED":
+        return "bg-gray-100 text-gray-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -76,10 +85,12 @@ export default function ViewArticlePage() {
           </Button>
           <div>
             <h1 className="text-3xl font-bold">{article.title}</h1>
-            <p className="text-muted-foreground">Détails de l'article</p>
+            <p className="text-muted-foreground">Détails de l&apos;article</p>
           </div>
         </div>
-        <Button onClick={() => router.push(`/dashboard/articles/edit/${article.id}`)}>
+        <Button
+          onClick={() => router.push(`/dashboard/articles/edit/${article.id}`)}
+        >
           <Edit className="w-4 h-4 mr-2" />
           Modifier
         </Button>
@@ -113,20 +124,25 @@ export default function ViewArticlePage() {
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm">
-                  <strong>Créé le:</strong> {new Date(article.createdAt).toLocaleDateString('fr-FR')}
+                  <strong>Créé le:</strong>{" "}
+                  {new Date(article.createdAt).toLocaleDateString("fr-FR")}
                 </span>
               </div>
             </div>
-            
+
             <div>
               <strong className="text-sm">Slug:</strong>
-              <code className="ml-2 px-2 py-1 bg-muted rounded text-sm">{article.slug}</code>
+              <code className="ml-2 px-2 py-1 bg-muted rounded text-sm">
+                {article.slug}
+              </code>
             </div>
 
             {article.publishedAt && (
               <div>
                 <strong className="text-sm">Publié le:</strong>
-                <span className="ml-2 text-sm">{new Date(article.publishedAt).toLocaleDateString('fr-FR')}</span>
+                <span className="ml-2 text-sm">
+                  {new Date(article.publishedAt).toLocaleDateString("fr-FR")}
+                </span>
               </div>
             )}
           </CardContent>
@@ -139,9 +155,11 @@ export default function ViewArticlePage() {
               <CardTitle>Image principale</CardTitle>
             </CardHeader>
             <CardContent>
-              <img 
-                src={article.featuredImage} 
+              <Image
+                src={article.featuredImage}
                 alt={article.title}
+                width={400}
+                height={300}
                 className="w-full max-w-md h-auto rounded-lg border"
               />
             </CardContent>
@@ -166,7 +184,7 @@ export default function ViewArticlePage() {
             <CardTitle>Contenu</CardTitle>
           </CardHeader>
           <CardContent>
-            <div 
+            <div
               className="prose prose-sm max-w-none"
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
@@ -174,5 +192,5 @@ export default function ViewArticlePage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

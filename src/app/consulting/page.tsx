@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import ArticlesSection from "@/components/ArticlesSection";
 import {
@@ -69,14 +69,16 @@ export default function ConsultingPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <img
+          <Image
             src="/sections/ofra consulting PNG.png"
             alt="OFRASAT Consulting"
+            width={300}
+            height={192}
             className="mx-auto mb-6 max-h-48 object-contain"
           />
           <p className="text-xl max-w-3xl mx-auto">
-            Cabinet de consultance spécialisé dans l'ingénierie numérique,
-            l'étude stratégique et le conseil technique et opérationnel
+            Cabinet de consultance spécialisé dans l&apos;ingénierie numérique,
+            l&apos;étude stratégique et le conseil technique et opérationnel
           </p>
         </div>
       </section>
@@ -89,8 +91,8 @@ export default function ConsultingPage() {
               <p>
                 OFRASAT est un cabinet de consultance de droit congolais,
                 indépendant et pluridisciplinaire, spécialisé dans{" "}
-                <strong>l'ingénierie numérique</strong>,{" "}
-                <strong>l'étude stratégique</strong> et{" "}
+                <strong>l&apos;ingénierie numérique</strong>,{" "}
+                <strong>l&apos;étude stratégique</strong> et{" "}
                 <strong>le conseil technique et opérationnel</strong>. Nous
                 mettons notre expertise au service des institutions publiques,
                 entreprises privées, ONG et bailleurs transformation digitale,
@@ -100,14 +102,14 @@ export default function ConsultingPage() {
                 Grâce à une approche fondée sur{" "}
                 <strong>la rigueur méthodologique</strong>,{" "}
                 <strong>la compréhension du contexte local</strong> et{" "}
-                <strong>l'innovation</strong>, nous accompagnons nos clients
-                depuis la phase de <strong>diagnostic</strong> jusqu'à la mise
+                <strong>l&apos;innovation</strong>, nous accompagnons nos clients
+                depuis la phase de <strong>diagnostic</strong> jusqu&apos;à la mise
                 en œuvre de <strong>solutions concrètes et durables</strong>.
               </p>
               <p>
                 Notre engagement : offrir un{" "}
                 <strong>accompagnement sur mesure</strong>, fondé sur{" "}
-                <strong>la qualité</strong>, <strong>l'intégrité</strong> et{" "}
+                <strong>la qualité</strong>, <strong>l&apos;intégrité</strong> et{" "}
                 <strong>la création de valeur</strong>.
               </p>
             </div>
@@ -119,14 +121,16 @@ export default function ConsultingPage() {
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
-            Pool d'expertises
+            Pool d&apos;expertises
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {expertisePool.map((expertise, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                <img
+                <Image
                   src={expertise.image}
                   alt={expertise.alt}
+                  width={400}
+                  height={300}
                   className="w-full aspect-[4/3] object-cover rounded mb-4"
                 />
                 <h3 className="text-xl font-bold mb-3 text-center lg:text-left">

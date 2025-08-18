@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const branchType = searchParams.get('branch')
 
   try {
-    const whereClause: any = {
+    const whereClause: Record<string, unknown> = {
       status: 'PUBLISHED'
     }
 
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json(articles)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

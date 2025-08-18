@@ -1,48 +1,51 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { ArrowLeft, Calendar, User, Building } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import Navbar from '@/components/Navbar'
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import { ArrowLeft, Calendar, User, Building } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
 
 interface Article {
-  id: string
-  title: string
-  slug: string
-  excerpt?: string
-  content: string
-  featuredImage?: string
-  publishedAt: string
-  branch: { name: string }
-  author: { name: string }
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content: string;
+  featuredImage?: string;
+  publishedAt: string;
+  branch: { name: string };
+  author: { name: string };
 }
 
 export default function ArticlePage() {
-  const params = useParams()
-  const router = useRouter()
-  const [article, setArticle] = useState<Article | null>(null)
-  const [loading, setLoading] = useState(true)
+  const params = useParams();
+  const router = useRouter();
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchArticle()
-  }, [])
-
-  const fetchArticle = async () => {
-    try {
-      const response = await fetch(`/api/articles/public/${params.slug}`)
-      if (response.ok) {
-        const data = await response.json()
-        setArticle(data)
-      } else {
-        router.push('/404')
+    const fetchArticle = async () => {
+      try {
+        const response = await fetch(`/api/articles/public/${params.slug}`);
+        if (response.ok) {
+          const data = await response.json();
+          setArticle(data);
+        } else {
+          router.push("/404");
+        }
+      } catch {
+        router.push("/404");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      router.push('/404')
-    } finally {
-      setLoading(false)
+    };
+
+    if (params.slug) {
+      fetchArticle();
     }
-  }
+  }, [params.slug, router]);
 
   if (loading) {
     return (
@@ -52,23 +55,19 @@ export default function ArticlePage() {
           <p>Chargement...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!article) {
-    return null
+    return null;
   }
 
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      
+
       <div className="container mx-auto px-4 py-8">
-        <Button 
-          variant="ghost" 
-          onClick={() => router.back()}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => router.back()} className="mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Retour
         </Button>
@@ -77,7 +76,7 @@ export default function ArticlePage() {
           {/* Header */}
           <header className="mb-8">
             <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
-            
+
             {article.excerpt && (
               <p className="text-xl text-gray-600 mb-6">{article.excerpt}</p>
             )}
@@ -93,26 +92,30 @@ export default function ArticlePage() {
               </div>
               <div className="flex items-center">
                 <Calendar className="w-4 h-4 mr-1" />
-                <span>{new Date(article.publishedAt).toLocaleDateString('fr-FR')}</span>
+                <span>
+                  {new Date(article.publishedAt).toLocaleDateString("fr-FR")}
+                </span>
               </div>
             </div>
 
             {article.featuredImage && (
-              <img 
-                src={article.featuredImage} 
+              <Image
+                src={article.featuredImage}
                 alt={article.title}
+                width={800}
+                height={400}
                 className="w-full h-64 object-cover rounded-lg mb-8"
               />
             )}
           </header>
 
           {/* Content */}
-          <div 
+          <div
             className="prose prose-lg max-w-none"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         </article>
       </div>
     </div>
-  )
+  );
 }

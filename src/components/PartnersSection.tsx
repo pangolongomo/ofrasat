@@ -18,10 +18,10 @@ export default function PartnersSection() {
           
           <div className="prose prose-lg mx-auto text-gray-700 mb-8">
             <p className="mb-4">
-              Nous collaborons avec des institutions et entreprises engagées, partageant notre vision du développement durable et de l'innovation en Afrique.
+              Nous collaborons avec des institutions et entreprises engagées, partageant notre vision du développement durable et de l&apos;innovation en Afrique.
             </p>
             <p className="mb-6">
-              Dans le cadre de la préparation et de la soumission ou encore de l'accomplissement de la mission, OFRASAT peut mobiliser les sociétés partenaires pour préparer les documents d'appels d'offres ou de recourir à leur expertise rare pour accomplir sa mission, notamment :
+              Dans le cadre de la préparation et de la soumission ou encore de l&apos;accomplissement de la mission, OFRASAT peut mobiliser les sociétés partenaires pour préparer les documents d&apos;appels d&apos;offres ou de recourir à leur expertise rare pour accomplir sa mission, notamment :
             </p>
           </div>
 
