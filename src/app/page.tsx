@@ -1,11 +1,18 @@
-import Link from 'next/link'
-import { Building2, Users, Globe, Phone, Mail, MapPin } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import Navbar from '@/components/Navbar'
-import ManagementTeam from '@/components/ManagementTeam'
-import PresentationSection from '@/components/PresentationSection'
-import PartnersSection from '@/components/PartnersSection'
+import Link from "next/link";
+import { Building2, Users, Globe, Phone, Mail, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Navbar from "@/components/Navbar";
+import ManagementTeam from "@/components/ManagementTeam";
+import PresentationSection from "@/components/PresentationSection";
+import PartnersSection from "@/components/PartnersSection";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -13,29 +20,38 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative text-white py-20" style={{background: 'linear-gradient(to right, #060097, #0066cc)'}}>
+      <section
+        className="relative text-white py-20"
+        style={{ background: "linear-gradient(to right, #060097, #0066cc)" }}
+      >
         <div className="absolute inset-0">
-          <img 
-            src="/hero-bg.jpg" 
-            alt="OFRASAT Hero Background" 
+          <img
+            src="/hero-bg.jpg"
+            alt="OFRASAT Hero Background"
             className="w-full h-full object-cover opacity-30"
           />
         </div>
         <div className="relative container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">OFRASAT</h1>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Entreprise congolaise d'ingénierie, d'études et de conseils, pluridisciplinaire et indépendante à vocation internationale
+            Entreprise congolaise d'ingénierie, d'études et de conseils,
+            pluridisciplinaire et indépendante à vocation internationale
           </p>
           <div className="flex justify-center space-x-4">
-            <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
-              <Link href="/consulting">
-                Nos Services
-              </Link>
+            <Button
+              asChild
+              size="lg"
+              className="bg-white text-blue-900 hover:bg-gray-100"
+            >
+              <Link href="/consulting">Nos Services</Link>
             </Button>
-            <Button variant="outline" size="lg" asChild className="border-white text-white bg-transparent hover:bg-white hover:text-blue-900">
-              <Link href="#contact">
-                Nous Contacter
-              </Link>
+            <Button
+              variant="outline"
+              size="lg"
+              asChild
+              className="border-white text-white bg-transparent hover:bg-white hover:text-blue-900"
+            >
+              <Link href="#contact">Nous Contacter</Link>
             </Button>
           </div>
         </div>
@@ -43,60 +59,30 @@ export default function HomePage() {
 
       <PresentationSection />
 
-      {/* Services */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Nos Services</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Études générales</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Les études générales doivent permettre de nourrir par des éléments techniques vérifiés et structurés les réflexions et l'analyse de scénarios de la mission, de résolution de problématiques identifiées, de définition de schémas directeurs d'investissement, de plan de gestion etc.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Maîtrise d'œuvre</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Véritable concepteur et chef d'orchestre de l'émergence et la réalisation d'un projet, le maîtrise d'œuvre doit permettre d'aboutir à la formalisation technique des attentes et du programme du donneur d'ordre.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Assistance à Maîtrise d'ouvrage</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  L'assistant à maîtrise d'ouvrage a le devoir d'accompagner, de conseiller et guider les donneurs d'ordre à chaque étape de la réalisation d'un projet depuis la définition du périmètre d'un programme jusqu'à l'accompagnement à la mise en service d'un ouvrage.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       <ManagementTeam />
 
       <PartnersSection />
 
       {/* Contact */}
-      <section id="contact" className="text-white py-16" style={{backgroundColor: '#060097'}}>
+      <section
+        id="contact"
+        className="text-white py-16"
+        style={{ backgroundColor: "#060097" }}
+      >
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Contactez-nous</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Contactez-nous
+          </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div>
               <h3 className="text-xl font-bold mb-4">Direction Générale</h3>
               <div className="space-y-3">
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 mr-3" />
-                  <span>101 Avenue Colonnel, Quartier Golf, Commune de la Gombe, Kinshasa, RDC</span>
+                  <span>
+                    101 Avenue Colonnel, Quartier Golf, Commune de la Gombe,
+                    Kinshasa, RDC
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 mr-3" />
@@ -109,10 +95,15 @@ export default function HomePage() {
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold mb-4">Direction d'exploitation</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Direction d'exploitation
+              </h3>
               <div className="flex items-center">
                 <MapPin className="w-5 h-5 mr-3" />
-                <span>2010 Avenue Saio, Quartier Onel, Commune de Kasa-vubu, Kinshasa, RDC</span>
+                <span>
+                  2010 Avenue Saio, Quartier Onel, Commune de Kasa-vubu,
+                  Kinshasa, RDC
+                </span>
               </div>
             </div>
           </div>
@@ -120,11 +111,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 OFRASAT. Tous droits réservés.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
-  )
+  );
 }

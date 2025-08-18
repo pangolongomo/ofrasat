@@ -15,6 +15,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -128,32 +143,51 @@ export default function DashboardLayout({
             <div className="flex items-center justify-between px-4 py-4">
               <div className="flex items-center space-x-4">
                 <SidebarTrigger />
-                <Link href="/" className="text-2xl font-bold text-primary">
-                  OFRASAT
-                </Link>
-                <span className="text-muted-foreground">/ Dashboard</span>
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/">
+                        <img
+                          src="/logo-ofrasat-blue.png"
+                          alt="OFRASAT"
+                          className="h-6 w-auto"
+                        />
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>
-                      {session.user.name?.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="text-sm">
-                    <p className="font-medium">{session.user.name}</p>
-                    <p className="text-muted-foreground">{session.user.role}</p>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Déconnexion
-                </Button>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center space-x-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback>
+                        {session.user.name?.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="text-sm text-left">
+                      <p className="font-medium">{session.user.name}</p>
+                      <p className="text-muted-foreground">{session.user.role}</p>
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link href="/" className="flex items-center">
+                      Accueil
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })} className="flex items-center">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Déconnexion
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </header>
 

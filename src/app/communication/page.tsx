@@ -1,10 +1,25 @@
-import Link from 'next/link'
-import { ArrowLeft, Megaphone, Camera, Palette, Calendar, Users, Target } from 'lucide-react'
-import Navbar from '@/components/Navbar'
-import ArticlesSection from '@/components/ArticlesSection'
+import Link from "next/link";
+import {
+  Megaphone,
+  Camera,
+  Palette,
+  Calendar,
+  Users,
+  Target,
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
+import ArticlesSection from "@/components/ArticlesSection";
+import Footer from "@/components/Footer";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function CommunicationPage() {
-
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -12,19 +27,31 @@ export default function CommunicationPage() {
       {/* Breadcrumb */}
       <div className="bg-gray-100 py-4">
         <div className="container mx-auto px-4">
-          <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour à l'accueil
-          </Link>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Communication</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-6">OFRASAT Communication</h1>
+          <img
+            src="/sections/OFRA AGENCY PNG.png"
+            alt="OFRASAT Communication"
+            className="mx-auto mb-6 max-h-48 object-contain"
+          />
           <p className="text-xl max-w-3xl mx-auto">
-            Cabinet de communication global spécialisé dans le conseil stratégique, la création de contenu et la production audiovisuelle
+            Cabinet de communication global spécialisé dans le conseil
+            stratégique, la création de contenu et la production audiovisuelle
           </p>
         </div>
       </section>
@@ -33,9 +60,18 @@ export default function CommunicationPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg mx-auto text-gray-700">
+            <div className="prose prose-lg mx-auto text-gray-700 space-y-6">
               <p>
-                OFRASAT est un cabinet de communication global spécialisé dans le conseil stratégique, la création de contenu, la communication institutionnelle et la production audiovisuelle. Nous accompagnons les institutions, entreprises, ONG et marques dans la conception, la mise en œuvre et le suivi de leurs stratégies de communication à fort impact.
+                OFRASAT est un <strong>cabinet de communication global</strong>{" "}
+                spécialisé dans <strong>le conseil stratégique</strong>,{" "}
+                <strong>la création de contenu</strong>,{" "}
+                <strong>la communication institutionnelle</strong> et{" "}
+                <strong>la production audiovisuelle</strong>.
+              </p>
+              <p>
+                Nous accompagnons les institutions, entreprises, ONG et marques
+                dans la conception, la mise en œuvre et le suivi de leurs
+                stratégies de communication à fort impact.
               </p>
             </div>
           </div>
@@ -45,11 +81,15 @@ export default function CommunicationPage() {
       {/* Services */}
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Nos domaines d'expertise</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Nos domaines d'expertise
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Target className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Conseil et stratégie en communication</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Conseil et stratégie en communication
+              </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>• Diagnostic et audit de communication</li>
                 <li>• Élaboration de stratégies globales</li>
@@ -59,7 +99,9 @@ export default function CommunicationPage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Megaphone className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Création & suivi de campagnes</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Création & suivi de campagnes
+              </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>• Conception de campagnes institutionnelles</li>
                 <li>• Production de contenus multimédias</li>
@@ -69,7 +111,9 @@ export default function CommunicationPage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Users className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Communication institutionnelle</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Communication institutionnelle
+              </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>• Gestion de la réputation</li>
                 <li>• Relations publiques</li>
@@ -79,7 +123,9 @@ export default function CommunicationPage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Palette className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Création graphique & design</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Création graphique & design
+              </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>• Identité visuelle (logo, charte graphique)</li>
                 <li>• Supports de communication</li>
@@ -89,7 +135,9 @@ export default function CommunicationPage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Camera className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Production audiovisuelle</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Production audiovisuelle
+              </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>• Documentaires institutionnels</li>
                 <li>• Cinéma & séries télévisées</li>
@@ -99,7 +147,9 @@ export default function CommunicationPage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Calendar className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-4">Événementiel & activation</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Événementiel & activation
+              </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>• Conception et organisation d'événements</li>
                 <li>• Lancement de produits ou campagnes</li>
@@ -117,10 +167,13 @@ export default function CommunicationPage() {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-8">Notre approche</h2>
             <p className="text-lg text-gray-700 mb-8">
-              Stratégique, créative, orientée résultats. Chaque mission est menée avec rigueur et innovation, en tenant compte de votre vision, de vos enjeux, de votre cible et du contexte local.
+              Stratégique, créative, orientée résultats. Chaque mission est
+              menée avec rigueur et innovation, en tenant compte de votre
+              vision, de vos enjeux, de votre cible et du contexte local.
             </p>
             <p className="text-lg text-gray-700">
-              Nous combinons analyse stratégique, créativité graphique, technologie et terrain pour garantir l'efficacité de vos actions.
+              Nous combinons analyse stratégique, créativité graphique,
+              technologie et terrain pour garantir l'efficacité de vos actions.
             </p>
           </div>
         </div>
@@ -133,36 +186,42 @@ export default function CommunicationPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="bg-white p-4 rounded-lg shadow-md">
-                <h4 className="font-bold text-purple-600">Institutions publiques & parapubliques</h4>
+                <h4 className="font-bold text-purple-600">
+                  Institutions publiques & parapubliques
+                </h4>
               </div>
             </div>
             <div className="text-center">
               <div className="bg-white p-4 rounded-lg shadow-md">
-                <h4 className="font-bold text-purple-600">ONG et organisations internationales</h4>
+                <h4 className="font-bold text-purple-600">
+                  ONG et organisations internationales
+                </h4>
               </div>
             </div>
             <div className="text-center">
               <div className="bg-white p-4 rounded-lg shadow-md">
-                <h4 className="font-bold text-purple-600">Entreprises et startups</h4>
+                <h4 className="font-bold text-purple-600">
+                  Entreprises et startups
+                </h4>
               </div>
             </div>
             <div className="text-center">
               <div className="bg-white p-4 rounded-lg shadow-md">
-                <h4 className="font-bold text-purple-600">Médias et acteurs culturels</h4>
+                <h4 className="font-bold text-purple-600">
+                  Médias et acteurs culturels
+                </h4>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <ArticlesSection branchType="communication" linkColor="text-purple-600 hover:text-purple-800" />
+      <ArticlesSection
+        branchType="communication"
+        linkColor="text-purple-600 hover:text-purple-800"
+      />
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 OFRASAT. Tous droits réservés.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
-  )
+  );
 }
