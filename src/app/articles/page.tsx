@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -25,7 +25,7 @@ interface Article {
   author: { name: string };
 }
 
-export default function ArticlesPage() {
+function ArticlesContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [articles, setArticles] = useState<Article[]>([]);
@@ -64,10 +64,7 @@ export default function ArticlesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-
-      <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">
             <Link href="/">
@@ -179,6 +176,16 @@ export default function ArticlesPage() {
           </p>
         )}
       </div>
+  );
+}
+
+export default function ArticlesPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <Suspense fallback={<div className="container mx-auto px-4 py-8"><div className="text-center">Chargement...</div></div>}>
+        <ArticlesContent />
+      </Suspense>
     </div>
   );
 }
