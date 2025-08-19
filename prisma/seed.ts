@@ -1,7 +1,13 @@
 import { PrismaClient, BranchType } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DIRECT_URL
+    }
+  }
+})
 
 async function main() {
   // Create superadmin user
