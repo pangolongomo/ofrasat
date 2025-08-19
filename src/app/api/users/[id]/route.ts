@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 const updateUserSchema = z.object({
   name: z.string().min(1),
@@ -77,6 +78,8 @@ export async function PUT(
       },
     });
 
+    revalidatePath("/dashboard/users");
+
     return NextResponse.json(updatedUser);
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -132,6 +135,8 @@ export async function DELETE(
   await prisma.user.delete({
     where: { id },
   });
+
+  revalidatePath("/dashboard/users");
 
   return NextResponse.json({ message: "User deleted successfully" });
 }

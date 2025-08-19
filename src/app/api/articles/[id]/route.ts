@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 const updateArticleSchema = z.object({
   title: z.string().min(1).optional(),
@@ -83,6 +84,21 @@ export async function PUT(
       },
     });
 
+    // Revalidate relevant pages
+    const branchTypes = { 
+      "1": "consulting", 
+      "2": "finance", 
+      "3": "communication" 
+    };
+    const branchType = branchTypes[article.branchId as keyof typeof branchTypes];
+    
+    if (branchType) {
+      revalidatePath(`/${branchType}`);
+    }
+    revalidatePath("/dashboard/articles");
+    revalidatePath("/articles");
+    revalidatePath(`/article/${article.slug}`);
+
     return NextResponse.json(article);
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -107,9 +123,24 @@ export async function DELETE(
   }
 
   try {
-    await prisma.article.delete({
+    const article = await prisma.article.delete({
       where: { id },
+      include: { branch: true },
     });
+
+    // Revalidate relevant pages
+    const branchTypes = { 
+      "1": "consulting", 
+      "2": "finance", 
+      "3": "communication" 
+    };
+    const branchType = branchTypes[article.branchId as keyof typeof branchTypes];
+    
+    if (branchType) {
+      revalidatePath(`/${branchType}`);
+    }
+    revalidatePath("/dashboard/articles");
+    revalidatePath("/articles");
 
     return NextResponse.json({ message: "Article deleted" });
   } catch {

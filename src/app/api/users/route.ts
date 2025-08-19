@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 const createUserSchema = z.object({
   name: z.string().min(1),
@@ -93,6 +94,8 @@ export async function POST(request: NextRequest) {
         createdAt: true,
       },
     });
+
+    revalidatePath("/dashboard/users");
 
     return NextResponse.json(user);
   } catch (error) {
