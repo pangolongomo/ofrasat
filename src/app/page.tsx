@@ -61,11 +61,7 @@ export default function HomePage() {
       <PartnersSection />
 
       {/* Contact */}
-      <section
-        id="contact"
-        className="text-white py-16"
-        style={{ backgroundColor: "#060097" }}
-      >
+      <section id="contact" className="text-white py-16 bg-[#060097]">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
             Contactez-nous

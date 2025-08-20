@@ -15,7 +15,7 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Ir. Dr. Michael Lototi",
+    name: "Michaël Lototi",
     position: "Directeur Général",
     image: "/team/michel.jpeg",
   },
@@ -26,12 +26,12 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Rodrique Sebu",
-    position: "Directeur Administratif et financier",
+    position: "Administration & finance",
     image: "/team/Rodrique.jpeg",
   },
   {
     name: "Annah Tshilumba",
-    position: "Directeur Communication et Marketing",
+    position: "Communication & Marketing",
     image: "/team/Mm_Hannah.jpg",
   },
   {
@@ -67,7 +67,7 @@ export default function ManagementTeam() {
               </div>
               <CardContent className="p-6 text-center">
                 <CardTitle className="mb-2">{member.name}</CardTitle>
-                <CardDescription className="text-blue-600 font-medium">
+                <CardDescription className="text-blue-600 font-medium text-xs">
                   {member.position}
                 </CardDescription>
               </CardContent>

@@ -39,7 +39,7 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="bg-primary text-white px-4 md:px-6">
+    <header className="bg-[#060097] text-white px-4 md:px-6">
       <div className="container mx-auto max-w-6xl flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
