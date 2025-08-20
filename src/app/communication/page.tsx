@@ -18,6 +18,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import ImageCarousel from "@/components/ImageCarousel";
 
 export default function CommunicationPage() {
   return (
@@ -41,22 +42,30 @@ export default function CommunicationPage() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <Image
-            src="/sections/OFRA AGENCY PNG.png"
-            alt="OFRASAT Communication"
-            width={300}
-            height={192}
-            className="mx-auto mb-6 max-h-48 object-contain"
-          />
-          <p className="text-xl max-w-3xl mx-auto">
-            Cabinet de communication global spécialisé dans le conseil
-            stratégique, la création de contenu et la production audiovisuelle
-          </p>
-        </div>
-      </section>
+      {/* Hero Carousel */}
+      <ImageCarousel
+        images={[
+          "/sections/communication/production_OV_1.jpeg",
+          "/sections/communication/production_OV_2.jpeg",
+          "/sections/communication/production_OV_3.jpeg",
+        ]}
+      >
+        <section className="bg-black/40 w-full h-full flex items-center justify-center">
+          <div className="text-center text-white px-4">
+            <Image
+              src="/sections/OFRA_AGENCY_PNG.png"
+              alt="OFRASAT Communication"
+              width={300}
+              height={192}
+              className="mx-auto mb-6 max-h-48 object-contain"
+            />
+            <p className="text-xl max-w-3xl mx-auto">
+              Cabinet de communication global spécialisé dans le conseil
+              stratégique, la création de contenu et la production audiovisuelle
+            </p>
+          </div>
+        </section>
+      </ImageCarousel>
 
       {/* About */}
       <section className="py-16">

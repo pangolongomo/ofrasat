@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from './providers'
+import { Providers } from "./providers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "OFRASAT",
+  icons: { icon: "/logo.png" },
   description: "Entreprise congolaise d'ingénierie, d'études et de conseils",
 };
 

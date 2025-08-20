@@ -10,6 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Footer from "@/components/Footer";
+import ImageCarousel from "@/components/ImageCarousel";
 
 const expertisePool = [
   {
@@ -66,22 +67,31 @@ export default function ConsultingPage() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <Image
-            src="/sections/ofra consulting PNG.png"
-            alt="OFRASAT Consulting"
-            width={300}
-            height={192}
-            className="mx-auto mb-6 max-h-48 object-contain"
-          />
-          <p className="text-xl max-w-3xl mx-auto">
-            Cabinet de consultance spécialisé dans l&apos;ingénierie numérique,
-            l&apos;étude stratégique et le conseil technique et opérationnel
-          </p>
-        </div>
-      </section>
+      {/* Hero Carousel */}
+      <ImageCarousel
+        images={[
+          "/sections/consulting/consultance_1.jpg",
+          "/sections/consulting/consultance_2.jpeg",
+          "/sections/consulting/consultance_3.jpeg",
+        ]}
+      >
+        <section className="bg-black/40 w-full h-full flex items-center justify-center">
+          <div className="text-center text-white px-4">
+            <Image
+              src="/sections/ofra_consulting_PNG.png"
+              alt="OFRASAT Consulting"
+              width={300}
+              height={192}
+              className="mx-auto mb-6 max-h-48 object-contain"
+            />
+            <p className="text-xl max-w-3xl mx-auto">
+              Cabinet de consultance spécialisé dans l&apos;ingénierie
+              numérique, l&apos;étude stratégique et le conseil technique et
+              opérationnel
+            </p>
+          </div>
+        </section>
+      </ImageCarousel>
 
       {/* About */}
       <section className="py-16">
@@ -102,15 +112,16 @@ export default function ConsultingPage() {
                 Grâce à une approche fondée sur{" "}
                 <strong>la rigueur méthodologique</strong>,{" "}
                 <strong>la compréhension du contexte local</strong> et{" "}
-                <strong>l&apos;innovation</strong>, nous accompagnons nos clients
-                depuis la phase de <strong>diagnostic</strong> jusqu&apos;à la mise
-                en œuvre de <strong>solutions concrètes et durables</strong>.
+                <strong>l&apos;innovation</strong>, nous accompagnons nos
+                clients depuis la phase de <strong>diagnostic</strong>{" "}
+                jusqu&apos;à la mise en œuvre de{" "}
+                <strong>solutions concrètes et durables</strong>.
               </p>
               <p>
                 Notre engagement : offrir un{" "}
                 <strong>accompagnement sur mesure</strong>, fondé sur{" "}
-                <strong>la qualité</strong>, <strong>l&apos;intégrité</strong> et{" "}
-                <strong>la création de valeur</strong>.
+                <strong>la qualité</strong>, <strong>l&apos;intégrité</strong>{" "}
+                et <strong>la création de valeur</strong>.
               </p>
             </div>
           </div>
