@@ -8,6 +8,7 @@ import ManagementTeam from "@/components/ManagementTeam";
 import PresentationSection from "@/components/PresentationSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
+import PartnersScroll from "@/components/PartnersScroll";
 
 export default function HomePage() {
   return (
@@ -58,7 +59,8 @@ export default function HomePage() {
 
       <ManagementTeam />
 
-      <PartnersSection />
+      {/* <PartnersSection /> */}
+      <PartnersScroll />
 
       {/* Contact */}
       <section id="contact" className="text-white py-16 bg-[#060097]">
