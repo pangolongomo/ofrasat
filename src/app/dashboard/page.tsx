@@ -1,7 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Users, Clock } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [totalArticles, totalUsers, draftArticles] = await Promise.all([
+    prisma.article.count(),
+    prisma.user.count(),
+    prisma.article.count({ where: { status: "DRAFT" } })
+  ]);
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">
@@ -14,7 +21,7 @@ export default function DashboardPage() {
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12</div>
+            <div className="text-2xl font-bold">{totalArticles}</div>
             <p className="text-xs text-muted-foreground">Total des articles</p>
           </CardContent>
         </Card>
@@ -24,7 +31,7 @@ export default function DashboardPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">5</div>
+            <div className="text-2xl font-bold">{totalUsers}</div>
             <p className="text-xs text-muted-foreground">Utilisateurs actifs</p>
           </CardContent>
         </Card>
@@ -34,7 +41,7 @@ export default function DashboardPage() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
+            <div className="text-2xl font-bold">{draftArticles}</div>
             <p className="text-xs text-muted-foreground">En attente de publication</p>
           </CardContent>
         </Card>

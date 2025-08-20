@@ -1,44 +1,42 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import Image from "next/image"
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   type CarouselApi,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
 interface ImageCarouselProps {
-  images: string[]
-  className?: string
-  imageClassName?: string
-  aspectRatio?: string
-  children?: React.ReactNode
+  images: string[];
+  className?: string;
+  imageClassName?: string;
+  children?: React.ReactNode;
 }
 
 export default function ImageCarousel({
   images,
   className = "",
   imageClassName = "",
-  aspectRatio = "aspect-video",
-  children
+  children,
 }: ImageCarouselProps) {
-  const [api, setApi] = useState<CarouselApi>()
+  const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
-    if (!api) return
+    if (!api) return;
 
     const interval = setInterval(() => {
-      api.scrollNext()
-    }, 5000)
+      api.scrollNext();
+    }, 5000);
 
-    return () => clearInterval(interval)
-  }, [api])
+    return () => clearInterval(interval);
+  }, [api]);
 
   return (
     <div className="relative">
-      <Carousel 
+      <Carousel
         className={`w-full ${className}`}
         setApi={setApi}
         opts={{ loop: true }}
@@ -63,5 +61,5 @@ export default function ImageCarousel({
         </div>
       )}
     </div>
-  )
+  );
 }
