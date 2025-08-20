@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -157,7 +158,7 @@ export default function CreateArticlePage() {
                     setArticle({ ...article, branchId: value })
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="cursor-pointer">
                     <SelectValue placeholder="Sélectionner une branche" />
                   </SelectTrigger>
                   <SelectContent>
@@ -178,7 +179,7 @@ export default function CreateArticlePage() {
                     setArticle({ ...article, status: value })
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="cursor-pointer">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -194,11 +195,23 @@ export default function CreateArticlePage() {
                 type="button"
                 variant="outline"
                 onClick={() => router.back()}
+                className="cursor-pointer"
               >
                 Annuler
               </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Création..." : "Créer l'article"}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="cursor-pointer"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Création...
+                  </>
+                ) : (
+                  "Créer l'article"
+                )}
               </Button>
             </div>
           </form>

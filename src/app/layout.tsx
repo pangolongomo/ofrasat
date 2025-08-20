@@ -15,7 +15,6 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "OFRASAT",
-  icons: { icon: "/logo.png" },
   description: "Entreprise congolaise d'ingénierie, d'études et de conseils",
 };
 

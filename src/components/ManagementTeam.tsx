@@ -5,7 +5,6 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { Globe } from "lucide-react";
 
 interface TeamMember {
   name: string;

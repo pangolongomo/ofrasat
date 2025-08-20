@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -33,6 +34,7 @@ export default function EditArticlePage() {
   const params = useParams();
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(false);
+  const [fetchingArticle, setFetchingArticle] = useState(true);
   const [article, setArticle] = useState({
     title: "",
     excerpt: "",
@@ -44,6 +46,7 @@ export default function EditArticlePage() {
 
   useEffect(() => {
     const fetchArticle = async () => {
+      setFetchingArticle(true);
       try {
         const response = await fetch(`/api/articles/${params.id}`);
         if (response.ok) {
@@ -59,6 +62,8 @@ export default function EditArticlePage() {
         }
       } catch {
         toast.error("Erreur lors du chargement de l&apos;article");
+      } finally {
+        setFetchingArticle(false);
       }
     };
 
@@ -122,7 +127,19 @@ export default function EditArticlePage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {fetchingArticle ? (
+            <div className="space-y-6">
+              <div className="animate-pulse space-y-4">
+                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                <div className="h-10 bg-gray-200 rounded"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                <div className="h-10 bg-gray-200 rounded"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                <div className="h-20 bg-gray-200 rounded"></div>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="title">Titre *</Label>
               <Input
@@ -222,10 +239,18 @@ export default function EditArticlePage() {
                 Annuler
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? "Modification..." : "Modifier l&apos;article"}
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Modification...
+                  </>
+                ) : (
+                  "Modifier l'article"
+                )}
               </Button>
             </div>
           </form>
+          )}
         </CardContent>
       </Card>
     </div>

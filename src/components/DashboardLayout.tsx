@@ -29,7 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -57,7 +57,19 @@ export default function DashboardLayout({
     }
   }, [status, router]);
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Image
+          src="/icon.png"
+          alt="OFRASAT"
+          width={120}
+          height={120}
+          className="animate-pulse"
+        />
+      </div>
+    );
+  }
   if (!session) return null;
 
   const canManageUsers = ["SUPERADMIN", "ADMIN"].includes(session.user.role);
@@ -166,7 +178,10 @@ export default function DashboardLayout({
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center space-x-2"
+                  >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback>
                         {session.user.name?.charAt(0)}
@@ -174,7 +189,9 @@ export default function DashboardLayout({
                     </Avatar>
                     <div className="text-sm text-left">
                       <p className="font-medium">{session.user.name}</p>
-                      <p className="text-muted-foreground">{session.user.role}</p>
+                      <p className="text-muted-foreground">
+                        {session.user.role}
+                      </p>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
@@ -185,7 +202,10 @@ export default function DashboardLayout({
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })} className="flex items-center">
+                  <DropdownMenuItem
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="flex items-center"
+                  >
                     <LogOut className="w-4 h-4 mr-2" />
                     Déconnexion
                   </DropdownMenuItem>

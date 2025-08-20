@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import type { Session } from "next-auth";
+import { Plus, Edit, Trash2, Eye, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -30,9 +32,119 @@ interface User {
   createdAt: string;
 }
 
+function UserTableSkeleton() {
+  return (
+    <>
+      {[...Array(5)].map((_, i) => (
+        <tr key={i}>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-4 w-24" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-4 w-32" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-4 w-16" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-6 w-12 rounded-full" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="flex space-x-2">
+              <Skeleton className="h-4 w-4" />
+              <Skeleton className="h-4 w-4" />
+              <Skeleton className="h-4 w-4" />
+            </div>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+}
+
+interface UserTableBodyProps {
+  users: User[];
+  session: Session;
+  canManageUsers: boolean;
+  canCreateAdmins: boolean;
+  setViewingUser: (user: User) => void;
+  openEditModal: (user: User) => void;
+  deleteUser: (id: string) => void;
+}
+
+function UserTableBody({
+  users,
+  session,
+  canManageUsers,
+  canCreateAdmins,
+  setViewingUser,
+  openEditModal,
+  deleteUser,
+}: UserTableBodyProps) {
+  return (
+    <>
+      {users.map((user: User) => (
+        <tr key={user.id}>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+            {user.name}
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {user.email}
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {user.role}
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+              Active
+            </span>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <div className="flex space-x-2">
+              {canManageUsers && (
+                <button
+                  onClick={() => setViewingUser(user)}
+                  className="text-blue-600 hover:text-blue-900 cursor-pointer"
+                  title="Voir les détails"
+                >
+                  <Eye className="w-4 h-4" />
+                </button>
+              )}
+              {canManageUsers &&
+                user.id !== session.user.id &&
+                (canCreateAdmins || user.role !== "SUPERADMIN") && (
+                  <button
+                    onClick={() => openEditModal(user)}
+                    className="text-green-600 hover:text-green-900 cursor-pointer"
+                    title="Modifier"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </button>
+                )}
+              {canManageUsers &&
+                user.id !== session.user.id &&
+                (canCreateAdmins || user.role !== "SUPERADMIN") && (
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="text-red-600 hover:text-red-900 cursor-pointer"
+                    title="Supprimer"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+            </div>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+}
+
 export default function UsersPage() {
   const { data: session } = useSession();
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [createLoading, setCreateLoading] = useState(false);
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [viewingUser, setViewingUser] = useState<User | null>(null);
@@ -53,15 +165,18 @@ export default function UsersPage() {
   }, []);
 
   const fetchUsers = async () => {
+    setLoading(true);
     const response = await fetch("/api/users");
     if (response.ok) {
       const data = await response.json();
       setUsers(data);
     }
+    setLoading(false);
   };
 
   const createUser = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCreateLoading(true);
     const response = await fetch("/api/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -75,6 +190,7 @@ export default function UsersPage() {
       const error = await response.json();
       alert(error.error || "Erreur lors de la création");
     }
+    setCreateLoading(false);
   };
 
   const updateUser = async (e: React.FormEvent) => {
@@ -133,7 +249,7 @@ export default function UsersPage() {
         {canCreateUsers && (
           <Dialog open={showCreateUser} onOpenChange={setShowCreateUser}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="cursor-pointer">
                 <Plus className="w-4 h-4 mr-2" />
                 Nouvel Utilisateur
               </Button>
@@ -212,10 +328,21 @@ export default function UsersPage() {
                 type="button"
                 variant="outline"
                 onClick={() => setShowCreateUser(false)}
+                disabled={createLoading}
+                className="cursor-pointer"
               >
                 Annuler
               </Button>
-              <Button type="submit">Créer</Button>
+              <Button type="submit" disabled={createLoading} className="cursor-pointer">
+                {createLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Création...
+                  </>
+                ) : (
+                  "Créer"
+                )}
+              </Button>
             </div>
           </form>
         </DialogContent>
@@ -360,59 +487,25 @@ export default function UsersPage() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {user.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.email}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.role}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                    Active
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex space-x-2">
-                    {canManageUsers && (
-                      <button
-                        onClick={() => setViewingUser(user)}
-                        className="text-blue-600 hover:text-blue-900"
-                        title="Voir les détails"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                    )}
-                    {canManageUsers &&
-                      user.id !== session.user.id &&
-                      (canCreateAdmins || user.role !== "SUPERADMIN") && (
-                        <button
-                          onClick={() => openEditModal(user)}
-                          className="text-green-600 hover:text-green-900"
-                          title="Modifier"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                      )}
-                    {canManageUsers &&
-                      user.id !== session.user.id &&
-                      (canCreateAdmins || user.role !== "SUPERADMIN") && (
-                        <button
-                          onClick={() => deleteUser(user.id)}
-                          className="text-red-600 hover:text-red-900"
-                          title="Supprimer"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      )}
-                  </div>
+            {loading ? (
+              <UserTableSkeleton />
+            ) : users.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                  Aucun utilisateur trouvé
                 </td>
               </tr>
-            ))}
+            ) : (
+              <UserTableBody
+                users={users}
+                session={session}
+                canManageUsers={canManageUsers}
+                canCreateAdmins={canCreateAdmins}
+                setViewingUser={setViewingUser}
+                openEditModal={openEditModal}
+                deleteUser={deleteUser}
+              />
+            )}
           </tbody>
         </table>
       </div>

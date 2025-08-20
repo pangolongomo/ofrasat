@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -42,12 +43,45 @@ interface Branch {
   name: string;
 }
 
+function ArticleTableSkeleton() {
+  return (
+    <>
+      {[...Array(5)].map((_, i) => (
+        <tr key={i}>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-4 w-32" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-6 w-20 rounded-full" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-6 w-16 rounded-full" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <Skeleton className="h-4 w-20" />
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="flex space-x-2">
+              <Skeleton className="h-8 w-8" />
+              <Skeleton className="h-8 w-8" />
+              <Skeleton className="h-8 w-8" />
+            </div>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+}
+
 export default function ArticlesPage() {
   const router = useRouter();
   const [articles, setArticles] = useState<Article[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showCreateArticle, setShowCreateArticle] = useState(false);
   const [editingArticle, setEditingArticle] = useState<Article | null>(null);
+  const [deletingArticle, setDeletingArticle] = useState<Article | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [newArticle, setNewArticle] = useState({
     title: "",
     excerpt: "",
@@ -71,6 +105,7 @@ export default function ArticlesPage() {
   }, []);
 
   const fetchArticles = async () => {
+    setLoading(true);
     try {
       const response = await fetch("/api/articles");
       if (response.ok) {
@@ -80,6 +115,7 @@ export default function ArticlesPage() {
     } catch {
       toast.error("Erreur lors du chargement des articles");
     }
+    setLoading(false);
   };
 
   const fetchBranches = async () => {
@@ -148,22 +184,27 @@ export default function ArticlesPage() {
     }
   };
 
-  const deleteArticle = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
+  const deleteArticle = async () => {
+    if (!deletingArticle) return;
+    setDeleteLoading(true);
 
     try {
-      const response = await fetch(`/api/articles/${id}`, {
+      const response = await fetch(`/api/articles/${deletingArticle.id}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
         await fetchArticles();
         toast.success("Article supprimé avec succès");
+        setDeletingArticle(null);
       } else {
-        toast.error("Erreur lors de la suppression");
+        const error = await response.json();
+        toast.error(error.error || "Erreur lors de la suppression");
       }
     } catch {
-      toast.error("Erreur lors de la suppression");
+      toast.error("Erreur réseau lors de la suppression");
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -171,7 +212,10 @@ export default function ArticlesPage() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Articles</h1>
-        <Button onClick={() => router.push("/dashboard/articles/create")}>
+        <Button
+          className="cursor-pointer"
+          onClick={() => router.push("/dashboard/articles/create")}
+        >
           <Plus className="w-4 h-4 mr-2" />
           Nouvel Article
         </Button>
@@ -201,67 +245,82 @@ export default function ArticlesPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {articles.map((article) => (
-                  <tr key={article.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {article.title}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                        {article.branch.name}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          article.status === "PUBLISHED"
-                            ? "bg-green-100 text-green-800"
-                            : article.status === "DRAFT"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {article.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(article.createdAt).toLocaleDateString("fr-FR")}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() =>
-                            router.push(`/dashboard/articles/${article.id}`)
-                          }
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() =>
-                            router.push(
-                              `/dashboard/articles/edit/${article.id}`
-                            )
-                          }
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteArticle(article.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
+                {loading ? (
+                  <ArticleTableSkeleton />
+                ) : articles.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="px-6 py-8 text-center text-gray-500"
+                    >
+                      Aucun article trouvé
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  articles.map((article) => (
+                    <tr key={article.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">
+                          {article.title}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                          {article.branch.name}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            article.status === "PUBLISHED"
+                              ? "bg-green-100 text-green-800"
+                              : article.status === "DRAFT"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-gray-100 text-gray-800"
+                          }`}
+                        >
+                          {article.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(article.createdAt).toLocaleDateString(
+                          "fr-FR"
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex space-x-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              router.push(`/dashboard/articles/${article.id}`)
+                            }
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              router.push(
+                                `/dashboard/articles/edit/${article.id}`
+                              )
+                            }
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setDeletingArticle(article)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -461,6 +520,48 @@ export default function ArticlesPage() {
               <Button type="submit">Modifier</Button>
             </div>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Modal */}
+      <Dialog
+        open={!!deletingArticle}
+        onOpenChange={(open) => !open && setDeletingArticle(null)}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Supprimer l&apos;article</DialogTitle>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir supprimer l&apos;article{" "}
+              <span className="font-semibold">
+                &quot;{deletingArticle?.title}&quot;
+              </span>{" "}
+              ? Cette action est irréversible.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end space-x-2 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setDeletingArticle(null)}
+              disabled={deleteLoading}
+            >
+              Annuler
+            </Button>
+            <Button
+              onClick={deleteArticle}
+              disabled={deleteLoading}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              {deleteLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Suppression...
+                </>
+              ) : (
+                "Supprimer"
+              )}
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

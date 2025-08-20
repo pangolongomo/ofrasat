@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -102,8 +103,15 @@ export default function ProfilePage() {
               />
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full">
-              {loading ? "Mise à jour..." : "Mettre à jour"}
+            <Button type="submit" disabled={loading} className="w-full cursor-pointer">
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Mise à jour...
+                </>
+              ) : (
+                "Mettre à jour"
+              )}
             </Button>
           </form>
         </CardContent>
