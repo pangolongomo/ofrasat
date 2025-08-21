@@ -2,19 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
-import {
-  LayoutDashboard,
-  FileText,
-  Users,
-  Settings,
-  LogOut,
-  User,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LayoutDashboard, FileText, Users, Settings, User } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,13 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import UserDropdown from "@/components/UserDropdown";
 import {
   Sidebar,
   SidebarContent,
@@ -176,41 +161,7 @@ export default function DashboardLayout({
                   </BreadcrumbList>
                 </Breadcrumb>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center space-x-2"
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback>
-                        {session.user.name?.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="text-sm text-left">
-                      <p className="font-medium">{session.user.name}</p>
-                      <p className="text-muted-foreground">
-                        {session.user.role}
-                      </p>
-                    </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href="/" className="flex items-center">
-                      Accueil
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => signOut({ callbackUrl: "/" })}
-                    className="flex items-center"
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Déconnexion
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserDropdown user={session.user} variant="dashboard" />
             </div>
           </header>
 
