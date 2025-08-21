@@ -29,7 +29,7 @@ const navigationLinks = [
 ] as const;
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -38,6 +38,7 @@ export default function Navbar() {
     () => setIsMobileMenuOpen((prev) => !prev),
     []
   );
+
   const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
 
   return (
@@ -95,7 +96,9 @@ export default function Navbar() {
 
             {/* Right side - User menu & Mobile toggle */}
             <div className="flex items-center space-x-2">
-              {session ? (
+              {status === "loading" ? (
+                <div className="h-12 w-24 bg-white/10 rounded-2xl animate-pulse" />
+              ) : session ? (
                 <UserDropdown user={session.user} variant="navbar" />
               ) : (
                 <Button
