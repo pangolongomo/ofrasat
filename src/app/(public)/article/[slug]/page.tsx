@@ -50,7 +50,6 @@ export default function ArticlePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <p>Chargement...</p>
         </div>
