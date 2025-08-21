@@ -7,9 +7,8 @@ import {
   Target,
 } from "lucide-react";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
 import ArticlesSection from "@/components/ArticlesSection";
-import Footer from "@/components/Footer";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,9 +21,7 @@ import ImageCarousel from "@/components/ImageCarousel";
 
 export default function CommunicationPage() {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-
+    <>
       {/* Breadcrumb */}
       <div className="bg-gray-100 py-4">
         <div className="container mx-auto px-4">
@@ -232,8 +229,6 @@ export default function CommunicationPage() {
         branchType="communication"
         linkColor="text-purple-600 hover:text-purple-800"
       />
-
-      <Footer />
-    </div>
+    </>
   );
 }

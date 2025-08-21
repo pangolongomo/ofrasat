@@ -10,16 +10,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface CompanyInfo {
-  id: string;
-  mission: string;
-  vision: string;
-  values: string;
-  address?: string;
-  phone?: string;
-  email?: string;
-  website?: string;
-}
+// interface CompanyInfo {
+//   id: string;
+//   mission: string;
+//   vision: string;
+//   values: string;
+//   address?: string;
+//   phone?: string;
+//   email?: string;
+//   website?: string;
+// }
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(false);

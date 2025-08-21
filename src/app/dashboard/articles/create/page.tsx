@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/card";
 import { toast } from "sonner";
 import RichTextEditor from "@/components/RichTextEditor";
+import ImageUpload from "@/components/ImageUpload";
+import { createClient } from "@/utils/supabase/client";
 
 interface Branch {
   id: string;
@@ -33,6 +35,7 @@ export default function CreateArticlePage() {
   const router = useRouter();
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [article, setArticle] = useState({
     title: "",
     excerpt: "",
@@ -58,15 +61,40 @@ export default function CreateArticlePage() {
     }
   };
 
+  const uploadImage = async (file: File): Promise<string> => {
+    const supabase = createClient();
+    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const fileName = `${Date.now()}-${sanitizedName}`;
+
+    const { data, error } = await supabase.storage
+      .from("articles")
+      .upload(fileName, file);
+
+    if (error) throw error;
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("articles").getPublicUrl(data.path);
+
+    return publicUrl;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      const finalArticle = { ...article };
+
+      if (selectedFile) {
+        const imageUrl = await uploadImage(selectedFile);
+        finalArticle.featuredImage = imageUrl;
+      }
+
       const response = await fetch("/api/articles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(article),
+        body: JSON.stringify(finalArticle),
       });
 
       if (response.ok) {
@@ -115,15 +143,15 @@ export default function CreateArticlePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="featuredImage">Image principale</Label>
-              <Input
-                id="featuredImage"
-                type="url"
+              <Label>Image principale</Label>
+              <ImageUpload
+                onImageSelect={(file) => {
+                  setSelectedFile(file);
+                  if (!file) {
+                    setArticle({ ...article, featuredImage: "" });
+                  }
+                }}
                 value={article.featuredImage}
-                onChange={(e) =>
-                  setArticle({ ...article, featuredImage: e.target.value })
-                }
-                placeholder="https://example.com/image.jpg"
               />
             </div>
 

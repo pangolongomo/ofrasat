@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { createClient } from "@/utils/supabase/client";
 
 const updateArticleSchema = z.object({
   title: z.string().min(1).optional(),
@@ -70,6 +71,19 @@ export async function PUT(
       return NextResponse.json({ error: "Article not found" }, { status: 404 });
     }
 
+    // Delete old image if updating with new one
+    if (data.featuredImage && existingArticle.featuredImage && data.featuredImage !== existingArticle.featuredImage) {
+      try {
+        const supabase = createClient();
+        const oldFileName = existingArticle.featuredImage.split('/').pop();
+        if (oldFileName) {
+          await supabase.storage.from('articles').remove([oldFileName]);
+        }
+      } catch {
+        // Old image couldn't be deleted, continue anyway
+      }
+    }
+
     const updateData: Record<string, unknown> = { ...data };
     if (data.status === "PUBLISHED" && existingArticle.status !== "PUBLISHED") {
       updateData.publishedAt = new Date();
@@ -123,9 +137,30 @@ export async function DELETE(
   }
 
   try {
-    const article = await prisma.article.delete({
+    const article = await prisma.article.findUnique({
       where: { id },
       include: { branch: true },
+    });
+
+    if (!article) {
+      return NextResponse.json({ error: "Article not found" }, { status: 404 });
+    }
+
+    // Delete the image from Supabase if it exists
+    if (article.featuredImage) {
+      try {
+        const supabase = createClient();
+        const fileName = article.featuredImage.split('/').pop();
+        if (fileName) {
+          await supabase.storage.from('articles').remove([fileName]);
+        }
+      } catch {
+        // Image couldn't be deleted from Supabase, continue anyway
+      }
+    }
+
+    await prisma.article.delete({
+      where: { id },
     });
 
     // Revalidate relevant pages

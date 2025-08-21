@@ -163,8 +163,8 @@ export default function DashboardLayout({
                         <Image
                           src="/logo-ofrasat-blue.png"
                           alt="OFRASAT"
-                          width={24}
-                          height={24}
+                          width={100}
+                          height={100}
                           className="h-6 w-auto"
                         />
                       </BreadcrumbLink>

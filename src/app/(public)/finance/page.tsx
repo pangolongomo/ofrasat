@@ -13,7 +13,6 @@ import {
   ChevronRight,
   X,
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import ArticlesSection from "@/components/ArticlesSection";
 import {
   Breadcrumb,
@@ -25,7 +24,6 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Footer from "@/components/Footer";
 import ImageCarousel from "@/components/ImageCarousel";
 
 const galleryImages = [
@@ -68,9 +66,7 @@ export default function FinancePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-
+    <>
       {/* Breadcrumb */}
       <div className="bg-gray-100 py-4">
         <div className="container mx-auto px-4">
@@ -372,9 +368,6 @@ export default function FinancePage() {
           linkColor="text-green-600 hover:text-green-800"
         />
       </div>
-
-      {/* Footer */}
-      <Footer />
-    </div>
+    </>
   );
 }

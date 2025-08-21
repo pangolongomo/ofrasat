@@ -201,9 +201,9 @@ export default function ViewArticlePage() {
               <Image
                 src={article.featuredImage}
                 alt={article.title}
-                width={400}
-                height={300}
-                className="w-full max-w-md h-auto rounded-lg border"
+                width={800}
+                height={400}
+                className="w-full h-auto rounded-lg border"
               />
             </CardContent>
           </Card>

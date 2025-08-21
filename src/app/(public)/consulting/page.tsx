@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
 import ArticlesSection from "@/components/ArticlesSection";
 import {
   Breadcrumb,
@@ -9,7 +8,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Footer from "@/components/Footer";
 import ImageCarousel from "@/components/ImageCarousel";
 
 const expertisePool = [
@@ -47,9 +45,7 @@ const expertisePool = [
 
 export default function ConsultingPage() {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-
+    <>
       {/* Breadcrumb */}
       <div className="bg-gray-100 py-4">
         <div className="container mx-auto px-4">
@@ -157,9 +153,6 @@ export default function ConsultingPage() {
         branchType="consulting"
         linkColor="text-blue-600 hover:text-blue-800"
       />
-
-      {/* Footer */}
-      <Footer />
-    </div>
+    </>
   );
 }
