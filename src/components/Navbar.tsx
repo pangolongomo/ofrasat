@@ -50,7 +50,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link
               href="/"
-              className="group flex items-center space-x-3 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-xl p-2 -m-2"
+              className="group flex items-center space-x-3 hover:scale-105 transition-all duration-300 focus:outline-none rounded-xl p-2 -m-2"
               aria-label="Retour à l'accueil OFRASAT"
             >
               <div className="relative">

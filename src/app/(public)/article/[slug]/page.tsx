@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { ArrowLeft, Calendar, User, Building } from "lucide-react";
+import { ArrowLeft, Calendar, User, Building, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Navbar from "@/components/Navbar";
 
 interface Article {
   id: string;
@@ -50,8 +49,8 @@ export default function ArticlePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-16 text-center">
-          <p>Chargement...</p>
+        <div className="container mx-auto px-4 py-16 flex justify-center items-center">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
         </div>
       </div>
     );

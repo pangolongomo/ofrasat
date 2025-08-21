@@ -1,4 +1,11 @@
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import Link from "next/link";
+import {
+  FaXTwitter,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -9,36 +16,36 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} OFRASAT. Tous droits réservés.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a
+            <Link
               href="#"
-              className="text-white hover:text-blue-400 transition-colors"
+              className="text-white hover:text-blue-400 hover:scale-125 transition-colors"
             >
-              <Facebook className="w-5 h-5" />
-            </a>
-            <a
+              <FaFacebookF className="w-5 h-5" />
+            </Link>
+            <Link
               href="#"
-              className="text-white hover:text-blue-400 transition-colors"
+              className="text-white hover:scale-125 transition-colors"
             >
-              <Twitter className="w-5 h-5" />
-            </a>
-            <a
+              <FaXTwitter className="w-5 h-5" />
+            </Link>
+            <Link
               href="#"
-              className="text-white hover:text-blue-400 transition-colors"
+              className="text-white hover:text-pink-400 hover:scale-125 transition-colors"
             >
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a
+              <FaInstagram className="w-5 h-5" />
+            </Link>
+            <Link
               href="#"
-              className="text-white hover:text-blue-400 transition-colors"
+              className="text-white hover:text-blue-400 hover:scale-125 transition-colors"
             >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
+              <FaLinkedinIn className="w-5 h-5" />
+            </Link>
+            <Link
               href="#"
-              className="text-white hover:text-blue-400 transition-colors"
+              className="text-white hover:text-red-500 hover:scale-125 transition-colors"
             >
-              <Youtube className="w-5 h-5" />
-            </a>
+              <FaYoutube className="w-5 h-5" />
+            </Link>
           </div>
         </div>
       </div>

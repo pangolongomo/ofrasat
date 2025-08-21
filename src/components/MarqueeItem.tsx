@@ -1,24 +1,27 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function MarqueeItem({
-  images,
-  from,
-  to,
-}: {
+interface MarqueeItemProps {
   images: {
     name: string;
     logo: string;
   }[];
-  from: number | string;
-  to: number | string;
-}) {
+  direction?: "rtl" | "ltr";
+}
+
+export default function MarqueeItem({
+  images,
+  direction = "rtl",
+}: MarqueeItemProps) {
+  const from = direction === "rtl" ? 0 : "-100%";
+  const to = direction === "rtl" ? "-100%" : 0;
+
   return (
-    <div className="flex my-24">
+    <div className="flex my-8">
       <motion.div
-        initial={{ x: `${from}` }}
-        animate={{ x: `${to}` }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        initial={{ x: from }}
+        animate={{ x: to }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         className="flex flex-shrink-0"
       >
         {images.map((image, index: number) => {
@@ -36,9 +39,9 @@ export default function MarqueeItem({
       </motion.div>
 
       <motion.div
-        initial={{ x: `${from}` }}
-        animate={{ x: `${to}` }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        initial={{ x: from }}
+        animate={{ x: to }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         className="flex flex-shrink-0"
       >
         {images.map((image, index: number) => {
