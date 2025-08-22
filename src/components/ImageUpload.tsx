@@ -62,7 +62,7 @@ export default function ImageUpload({
   return (
     <div className={cn("space-y-4", className)}>
       {displayImage ? (
-        <div className="relative">
+        <div className="relative h-48 w-full">
           <Image
             src={displayImage}
             alt="Preview"
